@@ -3,9 +3,7 @@ package com.lrc.sports;
 
 import backtype.storm.Config;
 import backtype.storm.StormSubmitter;
-import backtype.storm.generated.AlreadyAliveException;
-import backtype.storm.generated.ExecutorInfo;
-import backtype.storm.generated.InvalidTopologyException;
+
 import backtype.storm.topology.TopologyBuilder;
 import com.lrc.sports.bolt.SplitSententceBolt;
 import com.lrc.sports.util.Constants;
