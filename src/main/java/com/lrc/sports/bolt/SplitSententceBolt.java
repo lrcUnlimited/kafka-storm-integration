@@ -7,6 +7,8 @@ import backtype.storm.topology.base.BaseRichBolt;
 import backtype.storm.tuple.Fields;
 import backtype.storm.tuple.Tuple;
 import backtype.storm.tuple.Values;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,19 +17,22 @@ import java.util.Map;
 /**
  * Created by home1 on 2016/11/7.
  */
-public class SplitSententceBolt  extends BaseRichBolt{
+public class SplitSententceBolt extends BaseRichBolt {
+    private static final Logger logger = LoggerFactory.getLogger(SplitSententceBolt.class);
     private OutputCollector outputCollector;
+
     public void prepare(Map map, TopologyContext topologyContext, OutputCollector outputCollector) {
-        this.outputCollector=outputCollector;
+        this.outputCollector = outputCollector;
     }
 
     public void execute(Tuple tuple) {
-        String sentence=tuple.getString(0);
-        String[]words=sentence.split(" ");
-        for(String word:words){
-            List<Tuple> list=new ArrayList<Tuple>();
+        String sentence = tuple.getString(0);
+        logger.info("get kafka message "+sentence);
+        String[] words = sentence.split(" ");
+        for (String word : words) {
+            List<Tuple> list = new ArrayList<Tuple>();
             list.add(tuple);
-            outputCollector.emit(list,new Values(word.toLowerCase()));
+            outputCollector.emit(list, new Values(word.toLowerCase()));
         }
         outputCollector.ack(tuple);
 
