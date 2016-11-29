@@ -6,9 +6,18 @@ package com.lrc.sports.bean;
 public class Student {
     private int age;
     private String name;
+    private int []num;
 
     public int getAge() {
         return age;
+    }
+
+    public int[] getNum() {
+        return num;
+    }
+
+    public void setNum(int[] num) {
+        this.num = num;
     }
 
     public void setAge(int age) {

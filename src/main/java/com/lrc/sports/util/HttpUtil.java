@@ -1,7 +1,10 @@
 package com.lrc.sports.util;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
+import com.lrc.sports.bean.Request;
 import com.lrc.sports.bean.Student;
+import com.sun.org.apache.regexp.internal.RE;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -69,17 +72,23 @@ public class HttpUtil {
     }
 
     public static void main(String[] args) throws InterruptedException {
-        while(true) {
-            List<Student> list = new ArrayList<Student>(1);
-            Student s = new Student();
-            s.setAge((int) (Math.random() * 100));
-            s.setName("test");
-            list.add(s);
+        List<Request> list = new ArrayList<Request>(1);
+        Request<String> req=new Request<String>();
+        Student s = new Student();
+        s.setAge((int) (Math.random() * 100));
+        s.setName("test");
+        int[]num={1,2,456};
+        s.setNum(num);
+        req.setBody(JSON.toJSONString(s));
+        list.add(req);
+        System.out.println(JSONArray.toJSONString(list));
+        Student parseObject=JSON.parseObject(req.getBody(),Student.class);
+        System.out.println(parseObject.getName());
 
 
-            sendPost("http://192.168.1.235:5140", JSONArray.toJSONString(list));
-            Thread.sleep(1000);
-        }
+
+        //sendPost("http://192.168.1.235:5140", JSONArray.toJSONString(list));
+        //Thread.sleep(1000);
 
     }
 
